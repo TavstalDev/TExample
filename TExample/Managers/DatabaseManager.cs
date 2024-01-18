@@ -10,6 +10,10 @@ using Tavstal.TLibrary.Extensions;
 using Tavstal.TLibrary.Helpers.General;
 using Tavstal.TLibrary.Services;
 using Tavstal.TExample.Models;
+using MySql.Data.MySqlClient;
+using SDG.Unturned;
+using Tavstal.TLibrary.Helpers.Unturned;
+using Tavstal.TLibrary.Compatibility.Database;
 
 namespace Tavstal.TExample.Managers
 {
@@ -51,7 +55,39 @@ namespace Tavstal.TExample.Managers
         }
 
         #region Player Table
+        public bool AddPlayer(ulong steamId, string steamName, string characterName)
+        {
+            MySqlConnection MySQLConnection = CreateConnection();
+            return MySQLConnection.AddTableRow(tableName: _pluginConfig.Database.DatabaseTable_Players, new PlayerData(steamId, steamName, characterName, DateTime.Now));
+        }
 
+        public bool RemovePlayer(ulong steamId)
+        {
+            MySqlConnection MySQLConnection = CreateConnection();
+            return MySQLConnection.RemoveTableRow<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, $"SteamId='{steamId}'", null);
+        }
+
+        public bool UpdatePlayer(ulong steamId, string characterName)
+        {
+            MySqlConnection MySQLConnection = CreateConnection();
+            return MySQLConnection.UpdateTableRow<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, $"SteamId='{steamId}'", new List<SqlParameter>
+            {
+                SqlParameter.Get<PlayerData>(x => x.LastCharacterName, characterName),
+                SqlParameter.Get<PlayerData>(x => x.LastLogin, DateTime.Now)
+            });
+        }
+
+        public List<PlayerData> GetPlayers()
+        {
+            MySqlConnection MySQLConnection = CreateConnection();
+            return MySQLConnection.GetTableRows<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, whereClause: string.Empty, null);
+        }
+
+        public PlayerData FindPlayer(ulong steamId)
+        {
+            MySqlConnection MySQLConnection = CreateConnection();
+            return MySQLConnection.GetTableRow<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, whereClause: $"SteamId='{steamId}'", null);
+        }
         #endregion
     }
 }

@@ -126,6 +126,7 @@
     <Compile Include="Commands\CommandExample.cs" />
     <Compile Include="Commands\CommandVersion.cs" />
     <Compile Include="ExampleMain.cs" />
+    <Compile Include="Handlers\PlayerEventHandler.cs" />
     <Compile Include="Hooks\UconomyHook.cs" />
     <Compile Include="Managers\DatabaseManager.cs" />
     <Compile Include="Models\DatabaseData.cs" />

@@ -17,6 +17,7 @@ using Tavstal.TExample.Managers;
 using Tavstal.TLibrary.Compatibility.Economy;
 using Tavstal.TLibrary.Managers;
 using Tavstal.TExample.Hooks;
+using Tavstal.TExample.Handlers;
 
 namespace Tavstal.TExample
 {
@@ -32,6 +33,7 @@ namespace Tavstal.TExample
         {
             Instance = this;
             Level.onPostLevelLoaded += Event_OnPluginsLoaded;
+            PlayerEventHandler.AttachEvents();
 
             Logger.Log("#########################################");
             Logger.Log("# Thanks for using my plugin");
@@ -54,6 +56,7 @@ namespace Tavstal.TExample
         public override void OnUnLoad()
         {
             Level.onPostLevelLoaded -= Event_OnPluginsLoaded;
+            PlayerEventHandler.DetachEvents();
             Logger.Log($"# {Name} has been successfully unloaded.");
         }
 
