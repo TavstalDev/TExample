@@ -47,6 +47,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\Libraries\MySql.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\Newtonsoft.Json.dll</HintPath>
@@ -66,6 +70,14 @@
     </Reference>
     <Reference Include="Pathfinding.Poly2Tri">
       <HintPath>..\Libraries\Pathfinding.Poly2Tri.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RL-I18N">
+      <HintPath>..\Libraries\RL-I18N.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RL-I18N.West">
+      <HintPath>..\Libraries\RL-I18N.West.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RL-RestSharp">
@@ -114,7 +126,10 @@
     <Compile Include="Commands\CommandExample.cs" />
     <Compile Include="Commands\CommandVersion.cs" />
     <Compile Include="ExampleMain.cs" />
+    <Compile Include="Hooks\UconomyHook.cs" />
     <Compile Include="Managers\DatabaseManager.cs" />
+    <Compile Include="Models\DatabaseData.cs" />
+    <Compile Include="Models\PlayerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExampleConfig.cs" />
   </ItemGroup>
