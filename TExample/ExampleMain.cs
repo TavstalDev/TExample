@@ -27,7 +27,7 @@ namespace Tavstal.TExample
             
             Logger.Log("#########################################");
             Logger.Log("# Thanks for using my plugin");
-            Logger.Log("# Plugin Created By YourName");
+            Logger.Log($"# Plugin Created By {VersionInfo.CompanyName}");
             Logger.Log("# Discord: @YourDiscordName");
             Logger.Log("# Website: https://your.website.example");
             Logger.Log("# Discord: https://discord.gg/your_invite");
@@ -40,9 +40,7 @@ namespace Tavstal.TExample
 
         public override void OnUnLoad()
         {
-            
             Logger.Log($"# {Name} has been successfully unloaded.");
-
         }
 
 
