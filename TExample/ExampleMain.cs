@@ -29,6 +29,9 @@ namespace Tavstal.TExample
         public new static ExampleMain Instance { get; private set; }
         public new static TLogger Logger = new TLogger("TExample", false);
         public new static DatabaseManager DatabaseManager { get; private set; }
+        /// <summary>
+        /// Used to prevent error spamming that is related to database configuration.
+        /// </summary>
         public static bool IsConnectionAuthFailed { get; set; }
         public static IEconomyProvider EconomyProvider { get; private set; }
 
