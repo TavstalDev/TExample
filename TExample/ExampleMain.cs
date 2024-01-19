@@ -51,7 +51,14 @@ namespace Tavstal.TExample
             Logger.Log($"# Plugin Created By {VersionInfo.CompanyName}");
             Logger.Log("# Discord: @YourDiscordName");
             Logger.Log("# Website: https://your.website.example");
-            Logger.Log("# Discord: https://discord.gg/your_invite");
+            Logger.Log("# Discord Guild: https://discord.gg/your_invite");
+            // Please do not remove this region and its code, because the license require credits to the author.
+            #region Credits to Tavstal
+            Logger.Log("#########################################");
+            Logger.Log($"# This plugin uses TLibrary.");
+            Logger.Log($"# TLibrary Created By: Tavstal"); 
+            Logger.Log($"# Github: https://github.com/TavstalDev/TLibrary/tree/master");
+            #endregion
             Logger.Log("#########################################");
             Logger.Log($"# Build Version: {Version}");
             Logger.Log($"# Build Date: {BuildDate}");
