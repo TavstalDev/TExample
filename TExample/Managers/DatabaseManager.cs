@@ -26,6 +26,10 @@ namespace Tavstal.TExample.Managers
 
         }
 
+        /// <summary>
+        /// Checks the schema of the database, creates or modifies the tables if needed
+        /// <br/>PS. If you change the Primary Key then you must delete the table.
+        /// </summary>
         protected override void CheckSchema()
         {
             try
@@ -58,13 +62,13 @@ namespace Tavstal.TExample.Managers
         public bool AddPlayer(ulong steamId, string steamName, string characterName)
         {
             MySqlConnection MySQLConnection = CreateConnection();
-            return MySQLConnection.AddTableRow(tableName: _pluginConfig.Database.DatabaseTable_Players, new PlayerData(steamId, steamName, characterName, DateTime.Now));
+            return MySQLConnection.AddTableRow(tableName: _pluginConfig.Database.DatabaseTable_Players, value: new PlayerData(steamId, steamName, characterName, DateTime.Now));
         }
 
         public bool RemovePlayer(ulong steamId)
         {
             MySqlConnection MySQLConnection = CreateConnection();
-            return MySQLConnection.RemoveTableRow<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, $"SteamId='{steamId}'", null);
+            return MySQLConnection.RemoveTableRow<PlayerData>(tableName: _pluginConfig.Database.DatabaseTable_Players, whereClause: $"SteamId='{steamId}'", parameters: null);
         }
 
         public bool UpdatePlayer(ulong steamId, string characterName)

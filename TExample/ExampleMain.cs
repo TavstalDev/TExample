@@ -21,6 +21,9 @@ using Tavstal.TExample.Handlers;
 
 namespace Tavstal.TExample
 {
+    /// <summary>
+    /// The main plugin class.
+    /// </summary>
     public class ExampleMain : PluginBase<ExampleConfig>
     {
         public new static ExampleMain Instance { get; private set; }
@@ -29,10 +32,15 @@ namespace Tavstal.TExample
         public static bool IsConnectionAuthFailed { get; set; }
         public static IEconomyProvider EconomyProvider { get; private set; }
 
+        /// <summary>
+        /// Fired when the plugin is loaded.
+        /// </summary>
         public override void OnLoad()
         {
             Instance = this;
+            // Attach event, which will be fired when all plugins are loaded.
             Level.onPostLevelLoaded += Event_OnPluginsLoaded;
+            // Attach player related events
             PlayerEventHandler.AttachEvents();
 
             Logger.Log("#########################################");
@@ -53,6 +61,9 @@ namespace Tavstal.TExample
             Logger.Log($"# {Name} has been loaded.");
         }
 
+        /// <summary>
+        /// Fired when the plugin is unloaded.
+        /// </summary>
         public override void OnUnLoad()
         {
             Level.onPostLevelLoaded -= Event_OnPluginsLoaded;
@@ -71,6 +82,7 @@ namespace Tavstal.TExample
 
             Logger.LogLateInit();
             Logger.LogWarning("# Searching for economy plugin...");
+            // Create HookManager and load all hooks
             HookManager = new HookManager(this);
             HookManager.LoadAll(Assembly);
 
