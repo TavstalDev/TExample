@@ -15,7 +15,7 @@ namespace Tavstal.TExample.Commands
         public string Help => "Gets the version of the plugin";
         public string Syntax => "";
         public List<string> Aliases => new List<string>();
-        public List<string> Permissions => new List<string> { "tfly.version" };
+        public List<string> Permissions => new List<string> { "example.command.version" };
 
 
         public void Execute(IRocketPlayer caller, string[] command)
