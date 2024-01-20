@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Tavstal.TLibrary.Helpers.Unturned;
 
 namespace Tavstal.TExample.Commands
 {
@@ -20,10 +21,17 @@ namespace Tavstal.TExample.Commands
 
         public void Execute(IRocketPlayer caller, string[] command)
         {
-            ExampleMain.Logger.Log("#########################################");
-            ExampleMain.Logger.Log(string.Format("# Build Version: {0}", ExampleMain.Version));
-            ExampleMain.Logger.Log(string.Format("# Build Date: {0}", ExampleMain.BuildDate));
-            ExampleMain.Logger.Log("#########################################");
+            // Please do not remove this region and its code, because the license require credits to the author.
+            #region Credits to Tavstal
+            ExampleMain.Instance.SendPlainCommandReply(caller, "#########################################");
+            ExampleMain.Instance.SendPlainCommandReply(caller, $"# This plugin uses TLibrary.");
+            ExampleMain.Instance.SendPlainCommandReply(caller, $"# TLibrary Created By: Tavstal");
+            ExampleMain.Instance.SendPlainCommandReply(caller, $"# Github: https://github.com/TavstalDev/TLibrary/tree/master");
+            #endregion
+            ExampleMain.Instance.SendPlainCommandReply(caller, "#########################################");
+            ExampleMain.Instance.SendPlainCommandReply(caller, string.Format("# Build Version: {0}", ExampleMain.Version));
+            ExampleMain.Instance.SendPlainCommandReply(caller, string.Format("# Build Date: {0}", ExampleMain.BuildDate));
+            ExampleMain.Instance.SendPlainCommandReply(caller, "#########################################");
         }
     }
 }
