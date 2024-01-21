@@ -13,5 +13,9 @@ namespace Tavstal.TExample
         {
             Database = new DatabaseData("example_players");
         }
+
+        // Required because of the library
+        public ExampleConfig() { }
+        public ExampleConfig(string fileName, string path) : base(fileName, path) { }
     }
 }
