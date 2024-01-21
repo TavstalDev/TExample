@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Rocket.API;
 using Rocket.Core;
 using Rocket.Unturned.Player;
 using Steamworks;
@@ -6,13 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Tavstal.TLibrary.Compatibility.Economy;
 using Tavstal.TLibrary.Compatibility;
+using Tavstal.TLibrary.Compatibility.Economy;
 using Tavstal.TLibrary.Extensions;
-using Rocket.API;
-using Rocket.Core.Plugins;
 
 namespace Tavstal.TExample.Hooks
 {

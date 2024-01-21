@@ -1,11 +1,5 @@
 ﻿using Rocket.Unturned;
-using Rocket.Unturned.Events;
 using Rocket.Unturned.Player;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tavstal.TExample.Models;
 
 namespace Tavstal.TExample.Handlers

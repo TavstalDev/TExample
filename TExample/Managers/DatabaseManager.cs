@@ -1,19 +1,13 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tavstal.TExample.Models;
 using Tavstal.TLibrary.Compatibility;
+using Tavstal.TLibrary.Compatibility.Database;
 using Tavstal.TLibrary.Compatibility.Interfaces;
-using Tavstal.TLibrary.Managers;
 using Tavstal.TLibrary.Extensions;
 using Tavstal.TLibrary.Helpers.General;
-using Tavstal.TLibrary.Services;
-using Tavstal.TExample.Models;
-using MySql.Data.MySqlClient;
-using SDG.Unturned;
-using Tavstal.TLibrary.Helpers.Unturned;
-using Tavstal.TLibrary.Compatibility.Database;
+using Tavstal.TLibrary.Managers;
 
 namespace Tavstal.TExample.Managers
 {
