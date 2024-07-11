@@ -28,17 +28,17 @@ namespace Tavstal.TExample.Handlers
             U.Events.OnPlayerConnected -= OnPlayerConnected;
         }
 
-        private static void OnPlayerConnected(UnturnedPlayer player)
+        private static async void OnPlayerConnected(UnturnedPlayer player)
         {
-            PlayerData data = ExampleMain.DatabaseManager.FindPlayer(player.CSteamID.m_SteamID);
+            PlayerData data = await ExampleMain.DatabaseManager.FindPlayer(player.CSteamID.m_SteamID);
             if (data == null)
             {
-                ExampleMain.DatabaseManager.AddPlayer(player.CSteamID.m_SteamID, player.SteamName, player.CharacterName);
+                await ExampleMain.DatabaseManager.AddPlayer(player.CSteamID.m_SteamID, player.SteamName, player.CharacterName);
             }
             else
             {
                 if (data.LastCharacterName != player.CharacterName)
-                    ExampleMain.DatabaseManager.UpdatePlayer(player.CSteamID.m_SteamID, player.CharacterName);
+                    await ExampleMain.DatabaseManager.UpdatePlayer(player.CSteamID.m_SteamID, player.CharacterName);
             }
         }
     }
