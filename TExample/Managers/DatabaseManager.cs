@@ -14,7 +14,9 @@ namespace Tavstal.TExample.Managers
 {
     public class DatabaseManager : DatabaseManagerBase
     {
+#pragma warning disable IDE1006 //
         private static ExampleConfig _pluginConfig => ExampleMain.Instance.Config;
+#pragma warning restore IDE1006 //
 
         public DatabaseManager(IPlugin plugin, IConfigurationBase config) : base(plugin, config)
         {
