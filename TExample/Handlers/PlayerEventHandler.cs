@@ -6,7 +6,7 @@ namespace Tavstal.TExample.Handlers
 {
     public static class PlayerEventHandler
     {
-        private static bool _isAttached = false;
+        private static bool _isAttached;
 
         public static void AttachEvents()
         {

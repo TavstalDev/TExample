@@ -1,16 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using Rocket.API;
 using Rocket.Core;
-using Rocket.Unturned.Player;
 using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Tavstal.TLibrary.Compatibility;
-using Tavstal.TLibrary.Compatibility.Economy;
-using Tavstal.TLibrary.Compatibility.Interfaces.Economy;
+using Tavstal.TLibrary.Models.Hooks;
+using Tavstal.TLibrary.Models.Economy;
 using Tavstal.TLibrary.Extensions;
 
 namespace Tavstal.TExample.Hooks
@@ -48,6 +46,7 @@ namespace Tavstal.TExample.Hooks
                 ExampleMain.Logger.LogDebug($"UconomyHook #4: Searching for plugin instance type. Plugin instance valid?: {_pluginInstance != null}");
                 Type pluginInstanceType = _pluginInstance.GetType();
 
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                 ExampleMain.Logger.LogDebug($"UconomyHook #5: Searching for plugin configuration. Plugin instance type valid?: {pluginInstanceType != null}");
                 object uconomyConfigInst = uconomyType.GetProperty("Configuration").GetValue(uconomyPlugin);
 
@@ -103,7 +102,7 @@ namespace Tavstal.TExample.Hooks
                 #endregion
 
                 ExampleMain.Logger.LogException("Currency Name >> " + GetCurrencyName());
-                ExampleMain.Logger.LogException("Initial Balance >> " + GetConfigValue<decimal>("InitialBalance").ToString());
+                ExampleMain.Logger.LogException("Initial Balance >> " + GetConfigValue<decimal>("InitialBalance"));
                 ExampleMain.Logger.Log("Uconomy hook loaded.");
             }
             catch (Exception e)
@@ -274,9 +273,9 @@ namespace Tavstal.TExample.Hooks
             string value = "Credits";
             try
             {
-                value = GetConfigValue<string>("MoneyName").ToString();
+                value = GetConfigValue<string>("MoneyName");
             }
-            catch { }
+            catch { /*ignore*/ }
             return value;
         }
         #endregion

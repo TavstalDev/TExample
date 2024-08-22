@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using Tavstal.TExample.Handlers;
 using Tavstal.TExample.Hooks;
 using Tavstal.TExample.Managers;
-using Tavstal.TLibrary.Compatibility;
-using Tavstal.TLibrary.Compatibility.Economy;
+using Tavstal.TLibrary.Models.Plugin;
+using Tavstal.TLibrary.Models.Hooks;
 using Tavstal.TLibrary.Managers;
-using Logger = Rocket.Core.Logging.Logger;
 
 namespace Tavstal.TExample
 {
