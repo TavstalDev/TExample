@@ -9,7 +9,7 @@ namespace Tavstal.TExample
         [JsonProperty(Order = 3)]
         public DatabaseData Database { get; set; }
 
-        public new void LoadDefaults()
+        public override void LoadDefaults()
         {
             Database = new DatabaseData("example_players");
         }
