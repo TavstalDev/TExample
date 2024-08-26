@@ -11,6 +11,9 @@ namespace Tavstal.TExample
 
         public override void LoadDefaults()
         {
+            DebugMode = false;
+            Locale = "en";
+            DownloadLocalePacks = true;
             Database = new DatabaseData("example_players");
         }
 
