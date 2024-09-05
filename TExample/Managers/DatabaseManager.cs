@@ -26,7 +26,7 @@ namespace Tavstal.TExample.Managers
         /// Checks the schema of the database, creates or modifies the tables if needed
         /// <br/>PS. If you change the Primary Key then you must delete the table.
         /// </summary>
-        protected override async void CheckSchema()
+        public override async Task CheckSchemaAsync()
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Tavstal.TExample.Managers
                         await connection.CreateTableAsync<PlayerData>(_pluginConfig.Database.DatabaseTable_Players);
 
                     if (connection.State != System.Data.ConnectionState.Closed)
-                        connection.Close();
+                        await connection.CloseAsync();
                 }
             }
             catch (Exception ex)
