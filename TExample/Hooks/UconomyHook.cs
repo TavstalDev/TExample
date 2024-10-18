@@ -1,18 +1,19 @@
-﻿using Newtonsoft.Json.Linq;
-using Rocket.API;
-using Rocket.Core;
-using Steamworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Tavstal.TLibrary.Models.Hooks;
-using Tavstal.TLibrary.Models.Economy;
+using Newtonsoft.Json.Linq;
+using Rocket.API;
+using Rocket.Core;
+using Steamworks;
 using Tavstal.TLibrary.Extensions;
+using Tavstal.TLibrary.Models.Economy;
+using Tavstal.TLibrary.Models.Hooks;
 
 namespace Tavstal.TExample.Hooks
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class UconomyHook : Hook, IEconomyProvider
     {
         private MethodInfo _getBalanceMethod;
@@ -25,52 +26,53 @@ namespace Tavstal.TExample.Hooks
         private object _uconomyConfig;
 
 
-        public UconomyHook() : base(ExampleMain.Instance, "uconomy_exampleplugin", true) { }
+        public UconomyHook() : base(ExampleMain.Instance, "thook_uconomy", true) { }
 
         public override void OnLoad()
         {
             try
             {
+
                 ExampleMain.Logger.Log("Loading Uconomy hook...");
+                IRocketPlugin plugin = R.Plugins.GetPlugins().FirstOrDefault(c => c.Name.EqualsIgnoreCase("uconomy"));
+                if (plugin == null)
+                    throw new Exception("Could not find plugin.");
 
-                ExampleMain.Logger.LogDebug("UconomyHook #1: Searching for IRocketPlugin");
-                IRocketPlugin uconomyPlugin = R.Plugins.GetPlugins().FirstOrDefault(c => c.Name.EqualsIgnoreCase("uconomy"));
-
-                ExampleMain.Logger.LogDebug($"UconomyHook #2: Searching for plugin type. IRocketPlugin valid?: {uconomyPlugin != null}");
-                Type uconomyType = uconomyPlugin.GetType().Assembly.GetType("fr34kyn01535.Uconomy.Uconomy");
-
-                ExampleMain.Logger.LogDebug($"UconomyHook #3: Searching for plugin instance. Plugin type valid?: {uconomyType != null}");
-                _pluginInstance = uconomyType.GetField("Instance", BindingFlags.Static | BindingFlags.Public).GetValue(uconomyPlugin);
-
-
-                ExampleMain.Logger.LogDebug($"UconomyHook #4: Searching for plugin instance type. Plugin instance valid?: {_pluginInstance != null}");
+                Type pluginType = plugin.GetType().Assembly.GetType("fr34kyn01535.Uconomy.Uconomy");
+                if (pluginType == null)
+                    throw new Exception("Could not get plugin type.");
+                
+                _pluginInstance = pluginType.GetField("Instance", BindingFlags.Static | BindingFlags.Public)?.GetValue(plugin);
+                if (_pluginInstance == null)
+                    throw new Exception("Could not get plugin instance.");
                 Type pluginInstanceType = _pluginInstance.GetType();
+                
+                object uconomyConfigInst = pluginType.GetProperty("Configuration")?.GetValue(plugin);
+                if (uconomyConfigInst == null)
+                    throw new Exception("Could not get plugin configuration field.");
 
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                ExampleMain.Logger.LogDebug($"UconomyHook #5: Searching for plugin configuration. Plugin instance type valid?: {pluginInstanceType != null}");
-                object uconomyConfigInst = uconomyType.GetProperty("Configuration").GetValue(uconomyPlugin);
-
-                _uconomyConfig = uconomyConfigInst.GetType().GetProperty("Instance").GetValue(uconomyConfigInst);
-
-                ExampleMain.Logger.LogDebug($"UconomyHook #6: Searching for plugin database. Plugin config valid?: {_uconomyConfig != null}");
+                _uconomyConfig = uconomyConfigInst.GetType().GetProperty("Instance")?.GetValue(uconomyConfigInst);
+                if (_uconomyConfig == null)
+                    throw new Exception("Could not get plugin configuration instance.");
+                
                 _databaseInstance = pluginInstanceType.GetField("Database").GetValue(_pluginInstance);
+                if (_databaseInstance == null)
+                    throw new Exception("Failed to get the plugin database instance.");
 
-                ExampleMain.Logger.LogDebug($"UconomyHook #7: Getting database methods. Database instance valid?: {_databaseInstance != null}");
                 _getBalanceMethod = _databaseInstance.GetType().GetMethod(
                     "GetBalance", new[] { typeof(string) });
 
                 _increaseBalanceMethod = _databaseInstance.GetType().GetMethod(
                     "IncreaseBalance", new[] { typeof(string), typeof(decimal) });
-                ExampleMain.Logger.LogDebug($"UconomyHook #8: Getting translation method");
                 if (pluginInstanceType.GetMethods().Any(x => x.Name == "Localize"))
                     _getTranslation = pluginInstanceType.GetMethod("Localize", new[] { typeof(string), typeof(object[]) });
                 else
                     _getTranslation = pluginInstanceType.GetMethod("Translate", new[] { typeof(string), typeof(object[]) });
-                ExampleMain.Logger.LogDebug($"UconomyHook #9: Searching for events");
+                
                 #region Create Event Delegates
                 /* Added because it might be needed in the future
-                var parentPlugin = TShop.Instance;
-                var parentPluginType = parentPlugin.GetType().Assembly.GetType("Tavstal.TShop.TShop");
+                var parentPlugin = ExampleMain.Instance;
+                var parentPluginType = parentPlugin.GetType().Assembly.GetType("Tavstal.ExampleMain.TShop");
                 var parentPluginInstance = parentPluginType.GetField("Instance", BindingFlags.Static | BindingFlags.Public).GetValue(parentPlugin);
 
                 try
@@ -120,21 +122,23 @@ namespace Tavstal.TExample.Hooks
         }
 
         #region IPluginProvider Methods
-        public T GetConfigValue<T>(string VariableName)
+        public T GetConfigValue<T>(string variableName)
         {
             try
             {
-                return (T)Convert.ChangeType(_uconomyConfig.GetType().GetField(VariableName).GetValue(_uconomyConfig), typeof(T));
+                return (T)Convert.ChangeType(_uconomyConfig.GetType().GetField(variableName).GetValue(_uconomyConfig), typeof(T));
             }
             catch
             {
                 try
                 {
-                    return (T)Convert.ChangeType(_uconomyConfig.GetType().GetProperty(VariableName).GetValue(_uconomyConfig), typeof(T));
+                    // ReSharper disable PossibleNullReferenceException
+                    return (T)Convert.ChangeType(_uconomyConfig.GetType().GetProperty(variableName).GetValue(_uconomyConfig), typeof(T));
+                    // ReSharper restore PossibleNullReferenceException
                 }
                 catch
                 {
-                    ExampleMain.Logger.LogError($"Failed to get '{VariableName}' variable!");
+                    ExampleMain.Logger.LogError($"Failed to get '{variableName}' variable!");
                     return default;
                 }
             }
@@ -275,7 +279,7 @@ namespace Tavstal.TExample.Hooks
             {
                 value = GetConfigValue<string>("MoneyName");
             }
-            catch { /*ignore*/ }
+            catch { /* ignore */ }
             return value;
         }
         #endregion
