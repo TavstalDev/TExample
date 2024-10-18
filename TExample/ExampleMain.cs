@@ -14,9 +14,9 @@ namespace Tavstal.TExample
     /// </summary>
     public class ExampleMain : PluginBase<ExampleConfig>
     {
-        public new static ExampleMain Instance { get; private set; }
-        public new static TLogger Logger = new TLogger("TExample", false);
-        public new static DatabaseManager DatabaseManager { get; private set; }
+        public static ExampleMain Instance { get; private set; }
+        public new static readonly TLogger Logger = new TLogger("TExample", false);
+        public static DatabaseManager DatabaseManager { get; private set; }
         /// <summary>
         /// Used to prevent error spamming that is related to database configuration.
         /// </summary>
