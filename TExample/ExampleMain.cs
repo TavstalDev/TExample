@@ -36,7 +36,7 @@ namespace Tavstal.TExample
 
             Logger.Log("#########################################");
             Logger.Log("# Thanks for using my plugin");
-            Logger.Log($"# Plugin Created By {VersionInfo.CompanyName}");
+            Logger.Log($"# Plugin Created By Tavstal");
             Logger.Log("# Discord: @YourDiscordName");
             Logger.Log("# Website: https://your.website.example");
             Logger.Log("# Discord Guild: https://discord.gg/your_invite");
@@ -56,7 +56,7 @@ namespace Tavstal.TExample
             if (IsConnectionAuthFailed)
                 return;
 
-            Logger.Log($"# {Name} has been loaded.");
+            Logger.Log($"# {GetPluginName()} has been loaded.");
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Tavstal.TExample
         {
             Level.onPostLevelLoaded -= Event_OnPluginsLoaded;
             PlayerEventHandler.DetachEvents();
-            Logger.Log($"# {Name} has been successfully unloaded.");
+            Logger.Log($"# {GetPluginName()} has been successfully unloaded.");
         }
 
         private void Event_OnPluginsLoaded(int i)
